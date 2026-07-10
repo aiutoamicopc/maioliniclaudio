@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CM Tech - Social Stage Carousel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.stage-container{font-family:'Inter',sans-serif;max-width:500px;width:100%;margin:0 auto;background:#0f172a;border-radius:20px;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,0.4);border:1px solid rgba(0,255,65,0.15)}
+.stage-header{background:linear-gradient(135deg,#2563eb 0%,#06b6d4 100%);padding:1.2rem;display:flex;align-items:center;gap:0.8rem}
+.stage-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00ff41,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;color:#000;font-size:1.1rem;font-family:'JetBrains Mono',monospace;border:2px solid rgba(255,255,255,0.2)}
+.stage-header-text h4{color:white;font-size:1rem;margin:0}
+.stage-header-text p{color:rgba(255,255,255,0.8);font-size:0.75rem;margin:0}
+.stage-content{position:relative;height:320px;overflow:hidden}
+.stage-slide{position:absolute;top:0;left:0;width:100%;height:100%;padding:1.5rem;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateX(100%);transition:all 0.6s cubic-bezier(0.4,0,0.2,1)}
+.stage-slide.active{opacity:1;transform:translateX(0)}
+.stage-slide.prev{opacity:0;transform:translateX(-100%)}
+.stage-icon{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;align-self:flex-start}
+.stage-slide h3{color:white;font-size:1.3rem;margin-bottom:0.5rem;font-weight:700}
+.stage-slide p{color:#94a3b8;font-size:0.9rem;line-height:1.5;margin-bottom:0.8rem}
+.stage-price{color:#00ff41;font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:800;text-shadow:0 0 15px rgba(0,255,65,0.3)}
+.stage-tag{display:inline-block;background:rgba(0,255,65,0.1);color:#00ff41;padding:0.3rem 0.8rem;border-radius:50px;font-size:0.75rem;font-weight:600;margin-top:0.5rem;border:1px solid rgba(0,255,65,0.2);align-self:flex-start}
+.stage-nav{display:flex;justify-content:center;align-items:center;gap:1rem;padding:1rem;background:rgba(0,0,0,0.3)}
+.stage-nav-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-size:0.9rem}
+.stage-nav-btn:hover{background:#2563eb;border-color:#2563eb}
+.stage-dots{display:flex;gap:0.4rem}
+.stage-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.3);cursor:pointer;transition:all 0.3s}
+.stage-dot.active{background:#00ff41;width:24px;border-radius:4px}
+.stage-footer{padding:0.8rem 1.2rem;text-align:center;border-top:1px solid rgba(255,255,255,0.05)}
+.stage-footer p{color:#64748b;font-size:0.75rem;margin:0}
+.stage-footer p.motto{color:#00ff41;font-weight:600;margin-top:0.3rem}
+.stage-progress{height:3px;background:rgba(255,255,255,0.1);position:relative;overflow:hidden}
+.stage-progress-bar{height:100%;background:linear-gradient(90deg,#00ff41,#06b6d4);width:0%;transition:width 0.1s linear}
+.export-btn{background:linear-gradient(135deg,#2563eb 0%,#06b6d4 100%);color:white;border:none;padding:1rem 2rem;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;margin:2rem auto;display:block;transition:all 0.3s}
+.export-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,99,235,0.3)}
+.controls{text-align:center;margin-top:2rem;color:#64748b;font-size:0.85rem}
+.controls a{color:#06b6d4;text-decoration:none}
+@media(max-width:600px){body{padding:0.5rem}.stage-content{height:380px}}
+</style>
+</head>
+<body>
+
+<div class="stage-container" id="stageContainer">
+<div class="stage-header">
+<div class="stage-avatar">CM</div>
+<div class="stage-header-text">
+<h4>CM Tech</h4>
+<p>Claudio Maiolini • Tecnico Informatico</p>
+</div>
+</div>
+
+<div class="stage-progress"><div class="stage-progress-bar" id="progressBar"></div></div>
+
+<div class="stage-content" id="stageContent">
+
+<div class="stage-slide active" data-index="0">
+<div class="stage-icon" style="background:rgba(37,99,235,0.15);color:#2563eb"><i class="fas fa-tools"></i></div>
+<h3>PC Lento o Infetto?</h3>
+<p>Rimozione virus, ottimizzazione sistema, installazione software e upgrade hardware. Il tuo computer tornerà come nuovo.</p>
+<div class="stage-price">da €35</div>
+<span class="stage-tag">Intervento in 24h</span>
+</div>
+
+<div class="stage-slide" data-index="1">
+<div class="stage-icon" style="background:rgba(6,182,212,0.15);color:#06b6d4"><i class="fas fa-globe"></i></div>
+<h3>Hai Bisogno di un Sito Web?</h3>
+<p>Siti vetrina, e-commerce, SEO e gestione autonoma. 5 pagine incluse gratis, poi solo €50 a pagina aggiuntiva.</p>
+<div class="stage-price">5 pagine GRATIS</div>
+<span class="stage-tag">Responsive & SEO-ready</span>
+</div>
+
+<div class="stage-slide" data-index="2">
+<div class="stage-icon" style="background:rgba(0,255,65,0.15);color:#00ff41"><i class="fas fa-calculator"></i></div>
+<h3>Calcola il Tuo Preventivo</h3>
+<p>Seleziona i servizi che ti servono e vedi il costo in tempo reale. Trasparenza totale, nessuna sorpresa.</p>
+<div class="stage-price">GRATIS</div>
+<span class="stage-tag">Nessun impegno</span>
+</div>
+
+<div class="stage-slide" data-index="3">
+<div class="stage-icon" style="background:rgba(245,158,11,0.15);color:#f59e0b"><i class="fas fa-graduation-cap"></i></div>
+<h3>Impara il Computer</h3>
+<p>Lezioni personalizzate per tutti i livelli: Windows, Office, internet, social. A domicilio o online, al tuo ritmo.</p>
+<div class="stage-price">€35 / lezione</div>
+<span class="stage-tag">Prima lezione scontata</span>
+</div>
+
+<div class="stage-slide" data-index="4">
+<div class="stage-icon" style="background:rgba(236,72,153,0.15);color:#ec4899"><i class="fas fa-database"></i></div>
+<h3>Hai Perso i Tuoi Dati?</h3>
+<p>Recupero professionale da hard disk, SSD, chiavette USB e schede di memoria. Anche su dischi danneggiati.</p>
+<div class="stage-price">da €80</div>
+<span class="stage-tag">Diagnosi gratuita</span>
+</div>
+
+<div class="stage-slide" data-index="5">
+<div class="stage-icon" style="background:rgba(16,185,129,0.15);color:#10b981"><i class="fas fa-wifi"></i></div>
+<h3>WiFi Lento in Casa?</h3>
+<p>Configurazione, ottimizzazione e estensione copertura. Dimentica i punti morti e naviga alla massima velocità.</p>
+<div class="stage-price">da €50</div>
+<span class="stage-tag">Intervento in giornata</span>
+</div>
+
+<div class="stage-slide" data-index="6">
+<div class="stage-icon" style="background:rgba(239,68,68,0.15);color:#ef4444"><i class="fas fa-shield-alt"></i></div>
+<h3>Proteggi i Tuoi Dati</h3>
+<p>Antivirus, backup automatici, crittografia e consulenza GDPR. La sicurezza non è un optional, è una necessità.</p>
+<div class="stage-price">da €100/anno</div>
+<span class="stage-tag">Monitoraggio incluso</span>
+</div>
+
+<div class="stage-slide" data-index="7">
+<div class="stage-icon" style="background:rgba(139,92,246,0.15);color:#8b5cf6"><i class="fas fa-phone-alt"></i></div>
+<h3>Contattami Ora</h3>
+<p>WhatsApp, email o telefono. Rispondo entro 24 ore. Interventi a domicilio in tutta Italia su appuntamento.</p>
+<div class="stage-price">+39 353 353 5025</div>
+<span class="stage-tag">Disponibile ora</span>
+</div>
+
+</div>
+
+<div class="stage-nav">
+<button class="stage-nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+<div class="stage-dots" id="stageDots"></div>
+<button class="stage-nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<div class="stage-footer">
+<p>📧 maiolinicladio@gmail.com • P.IVA 00530260157</p>
+<p class="motto">"Aiutiamo le piccole a diventare grandi!"</p>
+</div>
+</div>
+
+<button class="export-btn" onclick="exportForSocial()">
+<i class="fas fa-camera"></i> Scatta Screenshot per Social
+</button>
+
+<div class="controls">
+<p>💡 <strong>Come usarlo:</strong></p>
+<p>1. Clicca "Scatta Screenshot" per nascondere i controlli</p>
+<p>2. Usa <kbd>Win+Shift+S</kbd> (Windows) o <kbd>Cmd+Shift+4</kbd> (Mac) per lo screenshot</p>
+<p>3. Oppure registra lo schermo per creare un video/Reel</p>
+<p>4. Per aggiungere slide: modifica il file HTML duplicando un blocco .stage-slide</p>
+</div>
+
+<script>
+let currentSlide=0;
+const slides=document.querySelectorAll('.stage-slide');
+const totalSlides=slides.length;
+const autoPlayDelay=5000;
+let autoPlayTimer,progressTimer;
+let progress=0;
+
+const dotsContainer=document.getElementById('stageDots');
+slides.forEach((_,i)=>{const dot=document.createElement('div');dot.className='stage-dot'+(i===0?' active':'');dot.onclick=()=>goToSlide(i);dotsContainer.appendChild(dot);});
+
+function updateSlides(){slides.forEach((slide,i)=>{slide.classList.remove('active','prev');if(i===currentSlide)slide.classList.add('active');else if(i<currentSlide)slide.classList.add('prev');});document.querySelectorAll('.stage-dot').forEach((dot,i)=>dot.classList.toggle('active',i===currentSlide));resetProgress();}
+function nextSlide(){currentSlide=(currentSlide+1)%totalSlides;updateSlides();}
+function prevSlide(){currentSlide=(currentSlide-1+totalSlides)%totalSlides;updateSlides();}
+function goToSlide(index){currentSlide=index;updateSlides();}
+function resetProgress(){progress=0;document.getElementById('progressBar').style.width='0%';clearInterval(progressTimer);clearTimeout(autoPlayTimer);progressTimer=setInterval(()=>{progress+=1;document.getElementById('progressBar').style.width=(progress/50*100)+'%';if(progress>=50)clearInterval(progressTimer);},autoPlayDelay/50);autoPlayTimer=setTimeout(nextSlide,autoPlayDelay);}
+
+let touchStartX=0;
+const content=document.getElementById('stageContent');
+content.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;});
+content.addEventListener('touchend',e=>{const touchEndX=e.changedTouches[0].screenX;if(touchStartX-touchEndX>50)nextSlide();if(touchEndX-touchStartX>50)prevSlide();});
+
+function exportForSocial(){document.querySelector('.export-btn').style.display='none';document.querySelector('.controls').style.display='none';document.body.style.background='#0f172a';alert('Screenshot pronto! Usa Win+Shift+S (Win) o Cmd+Shift+4 (Mac). Premi ESC per ripristinare.');document.addEventListener('keydown',function restore(e){if(e.key==='Escape'){document.querySelector('.export-btn').style.display='block';document.querySelector('.controls').style.display='block';document.body.style.background='#0a0a0a';document.removeEventListener('keydown',restore);}});}
+
+resetProgress();
+</script>
+</body>
+</html>

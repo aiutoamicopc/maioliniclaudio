@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claudio Maiolini - Tecnico Informatico & Sviluppo Web | Preventivo Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--secondary:#0f172a;--accent:#06b6d4;--light:#f8fafc;--dark:#0f172a;--gray:#64748b;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--gradient:linear-gradient(135deg,#2563eb 0%,#06b6d4 100%);--shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);--shadow-lg:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04);--matrix-green:#00ff41;--matrix-dark:#0a0a0a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--light);color:var(--dark);line-height:1.6;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(10px);z-index:1000;padding:0.75rem 2rem;box-shadow:var(--shadow);transition:all 0.3s ease}
+nav.scrolled{padding:0.5rem 2rem}
+.nav-container{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:1.4rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:#cbd5e1;font-weight:500;font-size:0.9rem;transition:color 0.3s;position:relative}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{background:var(--gradient);color:white!important;padding:0.5rem 1.2rem;border-radius:8px;font-weight:600!important}
+.mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:white}
+.datetime-bar{position:fixed;top:60px;left:0;right:0;background:rgba(15,23,42,0.9);backdrop-filter:blur(10px);z-index:999;padding:0.4rem 2rem;text-align:center;border-bottom:1px solid rgba(6,182,212,0.2)}
+.datetime-content{display:flex;justify-content:center;align-items:center;gap:2rem;max-width:1300px;margin:0 auto}
+.datetime-item{display:flex;align-items:center;gap:0.5rem;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:500}
+.datetime-item i{color:var(--primary);font-size:0.9rem}
+.datetime-separator{color:rgba(255,255,255,0.2)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--matrix-dark);position:relative;overflow:hidden;padding:8rem 2rem 4rem}
+#matrix-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+.hero-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(10,10,10,0.3) 0%,rgba(10,10,10,0.8) 100%);z-index:1}
+.hero-content{max-width:1300px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero-text h1{font-size:3.2rem;font-weight:800;color:white;line-height:1.1;margin-bottom:1rem}
+.hero-text h1 span{color:var(--matrix-green);text-shadow:0 0 20px rgba(0,255,65,0.3)}
+.hero-subtitle{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:1rem;margin-bottom:1.5rem;letter-spacing:2px}
+.hero-text p{font-size:1.15rem;color:#94a3b8;margin-bottom:2rem;max-width:500px}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.9rem 1.8rem;border-radius:10px;font-weight:600;text-decoration:none;transition:all 0.3s ease;display:inline-flex;align-items:center;gap:0.5rem;cursor:pointer;border:none;font-size:0.95rem}
+.btn-primary{background:var(--gradient);color:white;box-shadow:0 4px 15px rgba(37,99,235,0.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,99,235,0.5)}
+.btn-outline{background:transparent;color:white;border:2px solid var(--matrix-green)}
+.btn-outline:hover{background:rgba(0,255,65,0.1);box-shadow:0 0 20px rgba(0,255,65,0.2)}
+.hero-card{background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);border:1px solid rgba(0,255,65,0.2);border-radius:20px;padding:2rem;width:100%;max-width:380px;margin-left:auto;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+.hero-card-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.hero-avatar{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--matrix-green),var(--accent));display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:black;font-weight:800;font-family:'JetBrains Mono',monospace}
+.hero-card h3{color:white;font-size:1.1rem}
+.hero-card p{color:#94a3b8;font-size:0.9rem}
+.piva-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0,255,65,0.1);color:var(--matrix-green);padding:0.4rem 1rem;border-radius:50px;font-size:0.8rem;font-weight:600;margin-top:1rem;font-family:'JetBrains Mono',monospace;border:1px solid rgba(0,255,65,0.2)}
+.status-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(16,185,129,0.15);color:var(--success);padding:0.5rem 1rem;border-radius:50px;font-size:0.85rem;font-weight:600;margin-top:1rem;border:1px solid rgba(16,185,129,0.3)}
+.status-dot{width:8px;height:8px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+section{padding:5rem 2rem}
+.container{max-width:1300px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:3rem}
+.section-header h2{font-size:2.3rem;font-weight:800;margin-bottom:1rem;color:var(--dark)}
+.section-header p{color:var(--gray);font-size:1.05rem;max-width:600px;margin:0 auto}
+.section-tag{display:inline-block;background:rgba(37,99,235,0.1);color:var(--primary);padding:0.4rem 1rem;border-radius:50px;font-size:0.8rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:1px}
+.about-section{background:white}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-image{position:relative}
+.about-image-frame{background:var(--gradient);border-radius:24px;padding:4px;transform:rotate(-2deg);transition:transform 0.3s ease}
+.about-image-frame:hover{transform:rotate(0deg)}
+.about-image-inner{background:var(--secondary);border-radius:20px;padding:3rem;text-align:center;min-height:350px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.about-avatar-large{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:3rem;color:white;font-weight:800;margin-bottom:1.5rem;border:4px solid rgba(255,255,255,0.1)}
+.about-image-inner h3{color:white;font-size:1.5rem;margin-bottom:0.5rem}
+.about-image-inner p{color:#94a3b8;font-size:0.95rem}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.about-stat{background:rgba(255,255,255,0.05);border-radius:12px;padding:1rem;text-align:center}
+.about-stat-number{font-size:1.8rem;font-weight:800;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.about-stat-label{font-size:0.75rem;color:#94a3b8;margin-top:0.25rem}
+.about-text h3{font-size:1.8rem;margin-bottom:1rem;color:var(--dark)}
+.about-text p{color:var(--gray);margin-bottom:1rem;font-size:1rem}
+.about-skills{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+.skill-tag{background:rgba(37,99,235,0.08);color:var(--primary);padding:0.4rem 1rem;border-radius:50px;font-size:0.85rem;font-weight:500;border:1px solid rgba(37,99,235,0.15)}
+.whatido-section{background:linear-gradient(180deg,var(--light) 0%,#f1f5f9 100%)}
+.whatido-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.whatido-card{background:white;border-radius:16px;padding:2rem;box-shadow:var(--shadow);transition:all 0.3s ease;border:1px solid rgba(0,0,0,0.04);position:relative;overflow:hidden}
+.whatido-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gradient);transform:scaleX(0);transition:transform 0.3s ease}
+.whatido-card:hover::before{transform:scaleX(1)}
+.whatido-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.whatido-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem}
+.whatido-card h3{font-size:1.1rem;margin-bottom:0.6rem;color:var(--dark)}
+.whatido-card p{color:var(--gray);font-size:0.9rem}
+.quote-section{background:var(--secondary);position:relative;overflow:hidden}
+.quote-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 10% 20%,rgba(37,99,235,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(6,182,212,0.06) 0%,transparent 40%)}
+.quote-section .section-header h2,.quote-section .section-header p{color:white}
+.quote-section .section-tag{background:rgba(255,255,255,0.1);color:var(--accent)}
+.quote-container{display:grid;grid-template-columns:2fr 1fr;gap:2rem;position:relative;z-index:1}
+.quote-form{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2rem}
+.quote-category{margin-bottom:1.5rem}
+.quote-category-title{color:white;font-size:1.1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.quote-category-title i{color:var(--accent)}
+.quote-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem}
+.quote-item{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;gap:0.75rem}
+.quote-item:hover{border-color:var(--primary);background:rgba(37,99,235,0.1)}
+.quote-item.selected{border-color:var(--matrix-green);background:rgba(0,255,65,0.1)}
+.quote-item-checkbox{width:22px;height:22px;border:2px solid rgba(255,255,255,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;flex-shrink:0}
+.quote-item.selected .quote-item-checkbox{background:var(--matrix-green);border-color:var(--matrix-green)}
+.quote-item.selected .quote-item-checkbox i{color:black;font-size:0.75rem;font-weight:900}
+.quote-item-info{flex:1}
+.quote-item-name{color:white;font-size:0.9rem;font-weight:500}
+.quote-item-price{color:var(--accent);font-size:0.85rem;font-weight:600;font-family:'JetBrains Mono',monospace}
+.quote-item input[type="number"]{width:60px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;color:white;padding:0.3rem;text-align:center;font-family:'JetBrains Mono',monospace}
+.quote-summary{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:2rem;position:sticky;top:140px;height:fit-content}
+.quote-summary h3{color:white;font-size:1.2rem;margin-bottom:1.5rem;text-align:center}
+.quote-total-box{background:rgba(0,0,0,0.3);border:2px solid var(--matrix-green);border-radius:16px;padding:1.5rem;text-align:center;margin-bottom:1.5rem}
+.quote-total-label{color:#94a3b8;font-size:0.85rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.5rem}
+.quote-total-amount{font-size:2.5rem;font-weight:800;color:var(--matrix-green);font-family:'JetBrains Mono',monospace;text-shadow:0 0 20px rgba(0,255,65,0.3)}
+.quote-selected-list{max-height:200px;overflow-y:auto;margin-bottom:1.5rem}
+.quote-selected-item{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem}
+.quote-selected-item-name{color:#cbd5e1}
+.quote-selected-item-price{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:600}
+.quote-empty{text-align:center;color:#64748b;padding:2rem 0;font-size:0.9rem}
+.quote-submit-btn{width:100%;padding:1rem;background:var(--gradient);color:white;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.quote-submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,99,235,0.3)}
+.quote-submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.calendar-section{background:white}
+.calendar-container{max-width:900px;margin:0 auto}
+.calendar-widget{background:white;border-radius:20px;box-shadow:var(--shadow-lg);border:1px solid rgba(0,0,0,0.06);overflow:hidden}
+.calendar-header{background:var(--gradient);color:white;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.calendar-header h3{font-size:1.3rem;font-weight:700}
+.calendar-nav{display:flex;gap:0.5rem}
+.calendar-nav button{background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:8px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+.calendar-nav button:hover{background:rgba(255,255,255,0.3)}
+.calendar-body{padding:1.5rem}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem;margin-bottom:0.5rem}
+.calendar-weekday{text-align:center;font-size:0.8rem;font-weight:600;color:var(--gray);text-transform:uppercase;padding:0.5rem}
+.calendar-days{display:grid;grid-template-columns:repeat(7,1fr);gap:0.5rem}
+.calendar-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.3s;position:relative;border:2px solid transparent}
+.calendar-day:hover{background:rgba(37,99,235,0.08);border-color:var(--primary)}
+.calendar-day.other-month{color:#cbd5e1}
+.calendar-day.today{background:var(--gradient);color:white;font-weight:700}
+.calendar-day.has-event::after{content:'';position:absolute;bottom:6px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.calendar-day.selected{background:rgba(0,255,65,0.15);border-color:var(--matrix-green);color:var(--matrix-green)}
+.calendar-events{padding:0 1.5rem 1.5rem}
+.calendar-event{display:flex;align-items:center;gap:1rem;padding:0.75rem;background:#f8fafc;border-radius:10px;margin-bottom:0.5rem;border-left:3px solid var(--primary)}
+.calendar-event-time{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--primary);font-weight:600;min-width:60px}
+.calendar-event-title{font-size:0.9rem;color:var(--dark);font-weight:500}
+.blog-section{background:linear-gradient(180deg,#f1f5f9 0%,var(--light) 100%)}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.blog-card{background:white;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s ease;cursor:pointer;border:1px solid rgba(0,0,0,0.04)}
+.blog-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.blog-image{height:180px;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,0.3);position:relative;overflow:hidden}
+.blog-image::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,0.3) 100%)}
+.blog-content{padding:1.5rem}
+.blog-meta{display:flex;gap:1rem;margin-bottom:0.75rem;font-size:0.8rem;color:var(--gray)}
+.blog-meta span{display:flex;align-items:center;gap:0.3rem}
+.blog-card h3{font-size:1.1rem;margin-bottom:0.75rem;color:var(--dark);line-height:1.3}
+.blog-card p{color:var(--gray);font-size:0.9rem;margin-bottom:1rem}
+.blog-read-more{color:var(--primary);font-weight:600;font-size:0.9rem;display:inline-flex;align-items:center;gap:0.3rem}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem;opacity:0;transition:opacity 0.3s ease}
+.modal-overlay.active{display:flex;opacity:1}
+.modal{background:white;border-radius:24px;max-width:700px;width:100%;max-height:85vh;overflow-y:auto;transform:scale(0.9) translateY(20px);transition:transform 0.3s ease;box-shadow:0 25px 50px rgba(0,0,0,0.3)}
+.modal-overlay.active .modal{transform:scale(1) translateY(0)}
+.modal-header{background:var(--gradient);color:white;padding:2rem;position:relative}
+.modal-header h2{font-size:1.5rem;margin-bottom:0.5rem}
+.modal-header p{opacity:0.9;font-size:0.9rem}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:rgba(255,255,255,0.3);transform:rotate(90deg)}
+.modal-body{padding:2rem}
+.modal-body p{color:var(--gray);margin-bottom:1rem;line-height:1.7}
+.modal-body h3{color:var(--dark);margin:1.5rem 0 0.75rem;font-size:1.1rem}
+.modal-body ul{margin-left:1.5rem;color:var(--gray)}
+.modal-body ul li{margin-bottom:0.5rem}
+.modal-footer{padding:1.5rem 2rem;border-top:1px solid #e2e8f0;display:flex;justify-content:flex-end;gap:1rem}
+.contact-section{background:white}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{font-size:1.8rem;margin-bottom:1rem;color:var(--dark)}
+.contact-info>p{color:var(--gray);margin-bottom:2rem}
+.contact-methods{display:flex;flex-direction:column;gap:1.2rem}
+.contact-method{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem;background:#f8fafc;border-radius:14px;transition:all 0.3s ease;border:1px solid rgba(0,0,0,0.04)}
+.contact-method:hover{transform:translateX(5px);box-shadow:var(--shadow);border-color:var(--primary)}
+.contact-method-icon{width:45px;height:45px;border-radius:10px;background:var(--gradient);display:flex;align-items:center;justify-content:center;color:white;font-size:1.1rem;flex-shrink:0}
+.contact-method h4{font-size:1rem;margin-bottom:0.2rem;color:var(--dark)}
+.contact-method p{color:var(--gray);font-size:0.9rem}
+.contact-method a{color:var(--primary);text-decoration:none;font-weight:600}
+.contact-form{background:white;border-radius:20px;padding:2rem;box-shadow:var(--shadow-lg);border:1px solid rgba(0,0,0,0.06)}
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;margin-bottom:0.4rem;font-weight:600;color:var(--dark);font-size:0.9rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:0.85rem;border:2px solid #e2e8f0;border-radius:10px;font-family:'Inter',sans-serif;font-size:0.95rem;transition:all 0.3s ease;background:#f8fafc}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--primary);background:white;box-shadow:0 0 0 4px rgba(37,99,235,0.1)}
+.form-group textarea{min-height:100px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.submit-btn{width:100%;padding:1rem;background:var(--gradient);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.3s ease;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,99,235,0.3)}
+footer{background:var(--secondary);color:white;padding:3rem 2rem 2rem;text-align:center}
+.footer-content{max-width:1300px;margin:0 auto}
+.footer-logo{font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-piva{color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-bottom:1rem}
+.footer-social{display:flex;justify-content:center;gap:1rem;margin:1.5rem 0}
+.footer-social a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;transition:all 0.3s ease}
+.footer-social a:hover{background:var(--primary);transform:translateY(-3px)}
+.footer-copy{color:#64748b;font-size:0.85rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1)}
+@media(max-width:768px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-text h1{font-size:2.2rem}.hero-text p{margin:0 auto 2rem}.hero-buttons{justify-content:center}.hero-visual{order:-1}.hero-card{max-width:300px;margin:0 auto}.nav-links{display:none}.mobile-menu-btn{display:block}.about-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.quote-container{grid-template-columns:1fr}.quote-summary{position:static}.datetime-content{gap:1rem;flex-wrap:wrap}.datetime-item{font-size:0.75rem}section{padding:3rem 1.5rem}.section-header h2{font-size:1.8rem}.modal{max-height:90vh;margin:1rem}}
+.fade-in{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--light)}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+<div class="nav-container">
+<div class="logo">CM Tech</div>
+<ul class="nav-links">
+<li><a href="#chi-sono">Chi Sono</a></li>
+<li><a href="#cosa-faccio">Cosa Faccio</a></li>
+<li><a href="#preventivo">Preventivo</a></li>
+<li><a href="#calendario">Calendario</a></li>
+<li><a href="#blog">Blog</a></li>
+<li><a href="#contatti" class="nav-cta">Contattami</a></li>
+</ul>
+<button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</div>
+</nav>
+
+<!-- DateTime Bar -->
+<div class="datetime-bar">
+<div class="datetime-content">
+<div class="datetime-item"><i class="far fa-calendar-alt"></i><span id="currentDate">--</span></div>
+<div class="datetime-separator">|</div>
+<div class="datetime-item"><i class="far fa-clock"></i><span id="currentTime">--:--:--</span></div>
+<div class="datetime-separator">|</div>
+<div class="datetime-item"><i class="fas fa-map-marker-alt"></i><span>Italia</span></div>
+</div>
+</div>
+
+<!-- Hero Matrix -->
+<section class="hero">
+<canvas id="matrix-canvas"></canvas>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<div class="hero-text">
+<div class="hero-subtitle">&lt; TECNICO INFORMATICO &amp; WEB DEVELOPER /&gt;</div>
+<h1>Claudio<br><span>Maiolini</span></h1>
+<p>Soluzioni professionali per il tuo computer, il tuo sito web e la tua presenza digitale. Preventivi in tempo reale, prezzi trasparenti.</p>
+<p style="color:var(--matrix-green);font-family:'JetBrains Mono',monospace;font-size:1rem;margin-top:0.5rem;text-shadow:0 0 10px rgba(0,255,65,0.3)"><i class="fas fa-quote-left" style="margin-right:0.5rem;opacity:0.5"></i>Aiutiamo le piccole a diventare grandi!<i class="fas fa-quote-right" style="margin-left:0.5rem;opacity:0.5"></i></p>
+<div class="hero-buttons">
+<a href="#preventivo" class="btn btn-primary"><i class="fas fa-calculator"></i> Calcola Preventivo</a>
+<a href="#chi-sono" class="btn btn-outline"><i class="fas fa-user"></i> Chi Sono</a>
+</div>
+</div>
+<div class="hero-visual">
+<div class="hero-card">
+<div class="hero-card-header">
+<div class="hero-avatar">CM</div>
+<div><h3>Claudio Maiolini</h3><p>Tecnico Informatico</p></div>
+</div>
+<p style="color:#94a3b8;margin-bottom:0.5rem"><i class="fas fa-envelope" style="margin-right:0.5rem"></i> maiolinicladio@gmail.com</p>
+<p style="color:#94a3b8;margin-bottom:0.5rem"><i class="fas fa-phone" style="margin-right:0.5rem"></i> +39 353 353 5025</p>
+<div class="piva-badge"><i class="fas fa-id-card"></i> P.IVA 00530260157</div>
+<div class="status-badge"><span class="status-dot"></span>Disponibile per nuovi progetti</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Chi Sono -->
+<section id="chi-sono" class="about-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Chi Sono</span>
+<h2>Conosciamoci Meglio</h2>
+<p>Passione, esperienza e competenza al tuo servizio</p>
+</div>
+<div class="about-grid">
+<div class="about-image fade-in">
+<div class="about-image-frame">
+<div class="about-image-inner">
+<div class="about-avatar-large">CM</div>
+<h3>Claudio Maiolini</h3>
+<p>Tecnico Informatico & Web Developer</p>
+<div class="about-stats">
+<div class="about-stat"><div class="about-stat-number">10+</div><div class="about-stat-label">Anni di Esperienza</div></div>
+<div class="about-stat"><div class="about-stat-number">500+</div><div class="about-stat-label">Clienti Soddisfatti</div></div>
+<div class="about-stat"><div class="about-stat-number">1000+</div><div class="about-stat-label">Interventi</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="about-text fade-in">
+<h3>La Tecnologia è la Mia Passione</h3>
+<p>Sono Claudio Maiolini, tecnico informatico con oltre 10 anni di esperienza nel settore. La mia missione è rendere la tecnologia accessibile a tutti, risolvendo problemi e creando soluzioni su misura.</p>
+<p>Dalla riparazione del PC allo sviluppo di siti web professionali, offro un servizio completo e personalizzato. Credo nella trasparenza: nessun costo nascosto, preventivi chiari e tempi di intervento rapidi.</p>
+<p>Mi occupo sia di privati che di piccole e medie imprese, offrendo supporto tecnico, consulenza informatica e formazione. Ogni progetto è per me una nuova sfida da affrontare con entusiasmo e professionalità.</p>
+<div class="about-skills">
+<span class="skill-tag">Windows & macOS</span>
+<span class="skill-tag">HTML/CSS/JS</span>
+<span class="skill-tag">WordPress</span>
+<span class="skill-tag">Reti LAN/WiFi</span>
+<span class="skill-tag">Sicurezza IT</span>
+<span class="skill-tag">Backup</span>
+<span class="skill-tag">Photoshop</span>
+<span class="skill-tag">Office 365</span>
+<span class="skill-tag">SEO</span>
+<span class="skill-tag">E-commerce</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Cosa Faccio -->
+<section id="cosa-faccio" class="whatido-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Cosa Faccio</span>
+<h2>I Miei Servizi</h2>
+<p>Soluzioni complete per ogni esigenza tecnologica</p>
+</div>
+<div class="whatido-grid">
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(37,99,235,0.1);color:var(--primary)"><i class="fas fa-tools"></i></div>
+<h3>Assistenza PC</h3>
+<p>Riparazione, manutenzione e ottimizzazione del tuo computer. Rimozione virus, installazione SO, upgrade hardware e recupero dati.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(6,182,212,0.1);color:var(--accent)"><i class="fas fa-laptop-code"></i></div>
+<h3>Siti Web</h3>
+<p>Realizzazione di siti web moderni, responsive e ottimizzati SEO. Dal vetrina all'e-commerce completo con gestione autonoma.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(16,185,129,0.1);color:var(--success)"><i class="fas fa-network-wired"></i></div>
+<h3>Reti & WiFi</h3>
+<p>Configurazione e ottimizzazione di reti domestiche e aziendali. Copertura WiFi, sicurezza rete e condivisione file.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(245,158,11,0.1);color:var(--warning)"><i class="fas fa-graduation-cap"></i></div>
+<h3>Lezioni Informatica</h3>
+<p>Lezioni personalizzate per tutti i livelli. PC, Office, web, social media. A domicilio o online, al tuo ritmo.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(239,68,68,0.1);color:var(--danger)"><i class="fas fa-shield-alt"></i></div>
+<h3>Sicurezza Informatica</h3>
+<p>Proteggi i tuoi dati con antivirus, backup automatici, crittografia e consulenza privacy GDPR.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(139,92,246,0.1);color:#8b5cf6"><i class="fas fa-paint-brush"></i></div>
+<h3>Graphic Design</h3>
+<p>Logo, brand identity, banner web, volantini, fotoritocco e video editing per la tua immagine professionale.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(236,72,153,0.1);color:#ec4899"><i class="fas fa-database"></i></div>
+<h3>Recupero Dati</h3>
+<p>Recupero professionale di file persi o cancellati da hard disk, SSD, chiavette USB e schede di memoria. Interventi anche su dischi danneggiati.</p>
+</div>
+<div class="whatido-card fade-in">
+<div class="whatido-icon" style="background:rgba(14,165,233,0.1);color:#0ea5e9"><i class="fas fa-mobile-alt"></i></div>
+<h3>App & Mobile</h3>
+<p>Sviluppo di applicazioni web progressive (PWA), ottimizzazione siti per mobile e consulenza per presenza digitale su smartphone e tablet.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Preventivatore -->
+<section id="preventivo" class="quote-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Preventivo Online</span>
+<h2>Compila il Tuo Preventivo</h2>
+<p>Seleziona i servizi che ti interessano e vedi il costo in tempo reale</p>
+</div>
+<div class="quote-container">
+<div class="quote-form fade-in">
+
+<!-- OPERAZIONI BASE -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-microchip"></i> Operazioni Base</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Preparazione HARDWARE completa" data-price="150" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Preparazione HARDWARE completa</div><div class="quote-item-price">€150</div></div>
+</div>
+<div class="quote-item" data-name="Assemblaggio PC + Software" data-price="200" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Assemblaggio PC + Software base</div><div class="quote-item-price">€200</div></div>
+</div>
+<div class="quote-item" data-name="Pacchetto 10 interventi" data-price="300" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Pacchetto 10 interventi (no sostituzione)</div><div class="quote-item-price">€300</div></div>
+</div>
+<div class="quote-item" data-name="Case base funzionante" data-price="80" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Case base funzionante (vista da 0, no video)</div><div class="quote-item-price">€80</div></div>
+</div>
+</div>
+</div>
+
+<!-- LEZIONI -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-graduation-cap"></i> Lezioni e Formazione</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Lezioni Informatica" data-price="35" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Lezioni Informatica</div><div class="quote-item-price">€35/lez.</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Lezioni Web Editing" data-price="40" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Lezioni Web Editing</div><div class="quote-item-price">€40/lez.</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Lezioni Photoshop" data-price="45" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Lezioni Photoshop</div><div class="quote-item-price">€45/lez.</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+</div>
+</div>
+
+<!-- WEB -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-globe"></i> Siti Web e Web Marketing</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Sito web base (5 pagine)" data-price="0" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Sito web base (5 pagine incluse)</div><div class="quote-item-price">GRATIS*</div></div>
+</div>
+<div class="quote-item" data-name="Pagine web addizionali" data-price="50" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Pagine web addizionali</div><div class="quote-item-price">€50/pag.</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Manutenzione sito annuale FULL" data-price="500" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Manutenzione sito annuale FULL</div><div class="quote-item-price">€500/anno</div></div>
+</div>
+<div class="quote-item" data-name="SEO e posizionamento" data-price="300" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Ottimizzazione SEO e posizionamento</div><div class="quote-item-price">€300</div></div>
+</div>
+<div class="quote-item" data-name="E-commerce base (20 prodotti)" data-price="800" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">E-commerce base (20 prodotti)</div><div class="quote-item-price">€800</div></div>
+</div>
+<div class="quote-item" data-name="Registrazione utenti + mail" data-price="200" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Registrazione utenti + invio mail</div><div class="quote-item-price">€200</div></div>
+</div>
+<div class="quote-item" data-name="Modulo News/Articoli/Offerte" data-price="150" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Modulo News/Articoli/Offerte</div><div class="quote-item-price">€150</div></div>
+</div>
+<div class="quote-item" data-name="Motore di ricerca interno" data-price="100" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Motore di ricerca interno</div><div class="quote-item-price">€100</div></div>
+</div>
+<div class="quote-item" data-name="Guestbook / Commenti" data-price="80" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Guestbook / Commenti utenti</div><div class="quote-item-price">€80</div></div>
+</div>
+<div class="quote-item" data-name="Forum" data-price="250" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Forum</div><div class="quote-item-price">€250</div></div>
+</div>
+<div class="quote-item" data-name="Chat" data-price="180" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Chat</div><div class="quote-item-price">€180</div></div>
+</div>
+<div class="quote-item" data-name="Gestione Banner/Sponsor" data-price="120" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Gestione Banner/Sponsor</div><div class="quote-item-price">€120</div></div>
+</div>
+</div>
+</div>
+
+<!-- MULTIMEDIA -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-photo-video"></i> Multimedia</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Clip Audio" data-price="80" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Clip Audio (vocale/musicale)</div><div class="quote-item-price">€80/clip</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Clip Video (senza plugin)" data-price="150" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Clip Video (senza plugin)</div><div class="quote-item-price">€150/clip</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Clip Video con animazioni" data-price="250" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Clip Video (con animazioni)</div><div class="quote-item-price">€250/clip</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+<div class="quote-item" data-name="Clip Video 360" data-price="400" data-type="qty">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Clip Video 360°</div><div class="quote-item-price">€400/clip</div></div>
+<input type="number" class="qty-input" value="1" min="1" style="display:none">
+</div>
+</div>
+</div>
+
+<!-- HOSTING -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-server"></i> Hosting e Servizi</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Hosting Base (3 caselle)" data-price="50" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Hosting Base (3 caselle email)</div><div class="quote-item-price">€50/anno</div></div>
+</div>
+<div class="quote-item" data-name="Hosting Server Configurato" data-price="150" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Hosting Server Configurato (+10 caselle, AV, AS)</div><div class="quote-item-price">€150/anno</div></div>
+</div>
+<div class="quote-item" data-name="Upload/Download documenti" data-price="30" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Upload/Download documenti e immagini</div><div class="quote-item-price">€30</div></div>
+</div>
+<div class="quote-item" data-name="Report visite Urchin" data-price="100" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Report visite (Urchin su Server dedicato)</div><div class="quote-item-price">€100/anno</div></div>
+</div>
+</div>
+</div>
+
+<!-- TURISTICO -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-plane"></i> Settore Turistico</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Modulo pacchetti turistici" data-price="200" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Modulo pacchetti turistici</div><div class="quote-item-price">€200</div></div>
+</div>
+<div class="quote-item" data-name="Richiesta prenotazione email" data-price="100" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Richiesta prenotazione (email)</div><div class="quote-item-price">€100</div></div>
+</div>
+<div class="quote-item" data-name="Richiesta prenotazione + archivio" data-price="180" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Richiesta prenotazione + archivio</div><div class="quote-item-price">€180</div></div>
+</div>
+<div class="quote-item" data-name="Prenotazione online AEC" data-price="400" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Prenotazione online (AEC Booking Engine)</div><div class="quote-item-price">€400</div></div>
+</div>
+<div class="quote-item" data-name="Prenotazione online NETBOOKING" data-price="350" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Prenotazione online (NETBOOKING)</div><div class="quote-item-price">€350</div></div>
+</div>
+</div>
+</div>
+
+<!-- BUSINESS -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-briefcase"></i> Business</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Catalogo prodotti gestione remota" data-price="300" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Catalogo prodotti (gestione da remoto)</div><div class="quote-item-price">€300</div></div>
+</div>
+<div class="quote-item" data-name="E-commerce AEC 20 prodotti" data-price="800" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">E-commerce AEC (20 prodotti)</div><div class="quote-item-price">€800</div></div>
+</div>
+<div class="quote-item" data-name="E-commerce indipendente" data-price="1200" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">E-commerce piattaforma indipendente</div><div class="quote-item-price">€1.200</div></div>
+</div>
+<div class="quote-item" data-name="CRM" data-price="500" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">CRM (Customer Relationship Management)</div><div class="quote-item-price">€500</div></div>
+</div>
+<div class="quote-item" data-name="Sondaggi con grafici" data-price="200" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Sondaggi (domande + grafici dinamici)</div><div class="quote-item-price">€200</div></div>
+</div>
+<div class="quote-item" data-name="Ricerca e Selezione CV" data-price="350" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Ricerca e Selezione (gestione CV)</div><div class="quote-item-price">€350</div></div>
+</div>
+</div>
+</div>
+
+<!-- E-LEARNING -->
+<div class="quote-category">
+<div class="quote-category-title"><i class="fas fa-graduation-cap"></i> E-Learning</div>
+<div class="quote-items">
+<div class="quote-item" data-name="Gestione corsi e iscrizioni" data-price="400" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Gestione corsi e iscrizioni</div><div class="quote-item-price">€400</div></div>
+</div>
+<div class="quote-item" data-name="Test apprendimento" data-price="150" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Test apprendimento</div><div class="quote-item-price">€150</div></div>
+</div>
+<div class="quote-item" data-name="Classe virtuale" data-price="300" data-type="fixed">
+<div class="quote-item-checkbox"><i class="fas fa-check"></i></div>
+<div class="quote-item-info"><div class="quote-item-name">Classe virtuale</div><div class="quote-item-price">€300</div></div>
+</div>
+</div>
+</div>
+
+</div>
+
+<!-- Quote Summary -->
+<div class="quote-summary fade-in">
+<h3><i class="fas fa-receipt"></i> Riepilogo</h3>
+<div class="quote-total-box">
+<div class="quote-total-label">Totale Preventivo</div>
+<div class="quote-total-amount" id="quoteTotal">€0</div>
+</div>
+<div class="quote-selected-list" id="quoteSelectedList">
+<div class="quote-empty">Nessun servizio selezionato</div>
+</div>
+<button class="quote-submit-btn" id="quoteSubmitBtn" onclick="submitQuote()" disabled>
+<i class="fas fa-paper-plane"></i> Invia Richiesta
+</button>
+<p style="color:#64748b;font-size:0.8rem;text-align:center;margin-top:1rem">
+<i class="fas fa-info-circle"></i> I prezzi sono indicativi. Contattami per un preventivo dettagliato.
+</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Calendario -->
+<section id="calendario" class="calendar-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Calendario</span>
+<h2>Pianifica il Tuo Appuntamento</h2>
+<p>Consulta la disponibilità e prenota un appuntamento</p>
+</div>
+<div class="calendar-container fade-in">
+<div class="calendar-widget">
+<div class="calendar-header">
+<h3 id="calendarMonthYear">Luglio 2026</h3>
+<div class="calendar-nav">
+<button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+<button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+</div>
+</div>
+<div class="calendar-body">
+<div class="calendar-weekdays">
+<div class="calendar-weekday">Dom</div>
+<div class="calendar-weekday">Lun</div>
+<div class="calendar-weekday">Mar</div>
+<div class="calendar-weekday">Mer</div>
+<div class="calendar-weekday">Gio</div>
+<div class="calendar-weekday">Ven</div>
+<div class="calendar-weekday">Sab</div>
+</div>
+<div class="calendar-days" id="calendarDays"></div>
+</div>
+<div class="calendar-events" id="calendarEvents">
+<div class="calendar-event">
+<div class="calendar-event-time">09:00</div>
+<div class="calendar-event-title">Disponibile per appuntamenti</div>
+</div>
+<div class="calendar-event">
+<div class="calendar-event-time">14:00</div>
+<div class="calendar-event-title">Disponibile per appuntamenti</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Blog -->
+<section id="blog" class="blog-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Blog</span>
+<h2>Articoli e Consigli</h2>
+<p>Rimani aggiornato sul mondo della tecnologia</p>
+</div>
+<div class="blog-grid">
+<div class="blog-card fade-in" onclick="openModal('modal1')">
+<div class="blog-image"><i class="fas fa-shield-virus"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 05 Lug 2026</span>
+<span><i class="far fa-clock"></i> 5 min</span>
+</div>
+<h3>Come Proteggere il Tuo PC dai Virus nel 2026</h3>
+<p>Guida completa alla sicurezza informatica: antivirus, firewall, backup e buone pratiche per navigare sicuri.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal2')">
+<div class="blog-image"><i class="fas fa-rocket"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 28 Giu 2026</span>
+<span><i class="far fa-clock"></i> 7 min</span>
+</div>
+<h3>Sito Web Aziendale: Cosa Serve nel 2026</h3>
+<p>Dal responsive design alla SEO, tutto ciò che serve per avere un sito web moderno e performante.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal3')">
+<div class="blog-image"><i class="fas fa-wifi"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 15 Giu 2026</span>
+<span><i class="far fa-clock"></i> 4 min</span>
+</div>
+<h3>WiFi Lento? Ecco Come Velocizzarlo</h3>
+<p>Trucchi e consigli per ottimizzare la tua rete domestica: posizionamento router, canali, e dispositivi.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal4')">
+<div class="blog-image"><i class="fas fa-hdd"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 02 Giu 2026</span>
+<span><i class="far fa-clock"></i> 6 min</span>
+</div>
+<h3>SSD vs HDD: Quale Scegliere per il Tuo PC</h3>
+<p>Confronto dettagliato tra SSD e HDD: velocità, durata, prezzi e consigli per l'upgrade giusto.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal5')">
+<div class="blog-image"><i class="fas fa-lock"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 20 Mag 2026</span>
+<span><i class="far fa-clock"></i> 5 min</span>
+</div>
+<h3>Backup Automatici: Non Perdere Mai i Tuoi Dati</h3>
+<p>Strategie di backup locali e cloud: come proteggere foto, documenti e file importanti in modo automatico.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal6')">
+<div class="blog-image"><i class="fas fa-chalkboard-teacher"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 10 Mag 2026</span>
+<span><i class="far fa-clock"></i> 4 min</span>
+</div>
+<h3>Imparare il Computer da Zero: Guida per Principianti</h3>
+<p>Primi passi nel mondo informatico: file, cartelle, internet, email e i programmi essenziali da conoscere.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal7')">
+<div class="blog-image"><i class="fas fa-cloud"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 25 Apr 2026</span>
+<span><i class="far fa-clock"></i> 5 min</span>
+</div>
+<h3>Cloud Storage: Quale Scegliere nel 2026</h3>
+<p>Confronto tra Google Drive, Dropbox, OneDrive e iDrive. Spazio, prezzi, sicurezza e funzionalità per scegliere il servizio giusto.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+<div class="blog-card fade-in" onclick="openModal('modal8')">
+<div class="blog-image"><i class="fas fa-gamepad"></i></div>
+<div class="blog-content">
+<div class="blog-meta">
+<span><i class="far fa-calendar"></i> 12 Apr 2026</span>
+<span><i class="far fa-clock"></i> 6 min</span>
+</div>
+<h3>PC Gaming: Configurazione Perfetta nel 2026</h3>
+<p>Guida all'assemblaggio di un PC gaming bilanciato: CPU, GPU, RAM, SSD e raffreddamento per ogni budget.</p>
+<span class="blog-read-more">Leggi tutto <i class="fas fa-arrow-right"></i></span>
+</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:2rem">
+<button class="btn btn-primary" style="padding:0.8rem 2rem" onclick="alert('Per aggiungere nuovi articoli, modifica il file index.html aggiungendo nuove card blog e relativi modal. Contattami per assistenza!')">
+<i class="fas fa-plus"></i> Carica Altri Articoli
+</button>
+<p style="color:var(--gray);font-size:0.85rem;margin-top:0.75rem">Hai un articolo da pubblicare? <a href="#contatti" style="color:var(--primary)">Scrivimi!</a></p>
+</div>
+</div>
+</section>
+
+<!-- Modal 7 -->
+<div class="modal-overlay" id="modal7" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>Cloud Storage: Quale Scegliere nel 2026</h2>
+<p><i class="far fa-calendar"></i> 25 Aprile 2026 | <i class="far fa-clock"></i> 5 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal7')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>Con l'aumento esponenziale dei dati digitali, avere uno spazio cloud affidabile è diventato indispensabile. Vediamo le migliori soluzioni disponibili nel 2026.</p>
+<h3>Google Drive</h3>
+<p>15GB gratuiti, integrazione perfetta con Gmail e Google Workspace. Piano da 100GB a €19.99/anno. Ideale per chi usa già l'ecosistema Google.</p>
+<h3>Dropbox</h3>
+<p>Sincronizzazione impeccabile e condivisione file semplice. 2GB gratuiti, piano Plus da 2TB a €9.99/mese. Perfetto per professionisti e team.</p>
+<h3>Microsoft OneDrive</h3>
+<p>5GB gratuiti, 1TB incluso con Microsoft 365 (€69/anno). Integrazione nativa con Windows e Office. Ottimo per utenti Windows.</p>
+<h3>iDrive</h3>
+<p>Backup continuo di tutti i dispositivi. 5GB gratuiti, piano da 5TB a circa €60/anno. Eccellente per backup automatici e versioning.</p>
+<h3>La Mia Raccomandazione</h3>
+<p>Per uso personale: Google Drive. Per professionisti: Dropbox. Per chi usa Windows: OneDrive. Per backup massivo: iDrive.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal7')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<!-- Modal 8 -->
+<div class="modal-overlay" id="modal8" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>PC Gaming: Configurazione Perfetta nel 2026</h2>
+<p><i class="far fa-calendar"></i> 12 Aprile 2026 | <i class="far fa-clock"></i> 6 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal8')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>Assemblare un PC gaming nel 2026 è più accessibile che mai. Ecco le configurazioni consigliate per ogni fascia di prezzo, con componenti testati e affidabili.</p>
+<h3>Budget Entry (€600-800)</h3>
+<p>CPU AMD Ryzen 5 5600, GPU RX 6650 XT, 16GB DDR4, SSD NVMe 500GB. Perfetto per gaming 1080p a 60fps su dettagli alti.</p>
+<h3>Budget Medio (€1000-1300)</h3>
+<p>CPU Intel i5-13600K, GPU RTX 4060 Ti, 32GB DDR5, SSD NVMe 1TB. Gaming 1440p a 144fps, ray tracing attivabile.</p>
+<h3>Budget Alto (€1800-2200)</h3>
+<p>CPU AMD Ryzen 7 7800X3D, GPU RTX 4070 Ti Super, 32GB DDR5, SSD NVMe 2TB. Gaming 4K a 60fps+ o 1440p a 240fps.</p>
+<h3>Consigli Generali</h3>
+<p>Non risparmiare sull'alimentatore (minimo 80 Plus Bronze), usa un case con buon flusso d'aria e non dimenticare il monitor: un 144Hz fa la differenza.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal8')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<!-- Contact -->
+<section id="contatti" class="contact-section">
+<div class="container">
+<div class="section-header fade-in">
+<span class="section-tag">Contattami</span>
+<h2>Parliamo del Tuo Progetto</h2>
+<p>Compila il modulo o contattami direttamente. Risponderò entro 24 ore.</p>
+</div>
+<div class="contact-grid">
+<div class="contact-info fade-in">
+<h3>Restiamo in Contatto</h3>
+<p>Hai un problema con il computer? Vuoi un nuovo sito web? Scrivimi, troveremo la soluzione giusta insieme.</p>
+<div class="contact-methods">
+<div class="contact-method">
+<div class="contact-method-icon"><i class="fas fa-envelope"></i></div>
+<div><h4>Email</h4><p><a href="mailto:maiolinicladio@gmail.com">maiolinicladio@gmail.com</a></p></div>
+</div>
+<div class="contact-method">
+<div class="contact-method-icon"><i class="fas fa-phone"></i></div>
+<div><h4>Telefono / WhatsApp</h4><p><a href="tel:+393533535025">+39 353 353 5025</a></p></div>
+</div>
+<div class="contact-method">
+<div class="contact-method-icon"><i class="fas fa-clock"></i></div>
+<div><h4>Orari</h4><p>Lun - Ven: 9:00 - 19:00<br>Sab: 9:00 - 13:00</p></div>
+</div>
+<div class="contact-method">
+<div class="contact-method-icon"><i class="fas fa-map-marker-alt"></i></div>
+<div><h4>Zona</h4><p>Interventi a domicilio in tutta Italia (su appuntamento)</p></div>
+</div>
+</div>
+</div>
+<div class="contact-form fade-in">
+<form id="contactForm" action="https://formsubmit.co/maiolinicladio@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Nuova richiesta dal sito CM Tech">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_next" value="https://phpdimerda.altervista.org/grazie.html">
+<div class="form-row">
+<div class="form-group"><label for="nome">Nome *</label><input type="text" id="nome" name="nome" required placeholder="Il tuo nome"></div>
+<div class="form-group"><label for="cognome">Cognome</label><input type="text" id="cognome" name="cognome" placeholder="Il tuo cognome"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label for="email">Email *</label><input type="email" id="email" name="email" required placeholder="tua@email.com"></div>
+<div class="form-group"><label for="telefono">Telefono</label><input type="tel" id="telefono" name="telefono" placeholder="+39 123 456 7890"></div>
+</div>
+<div class="form-group">
+<label for="servizio">Servizio Richiesto *</label>
+<select id="servizio" name="servizio" required>
+<option value="">Seleziona un servizio</option>
+<option value="assistenza-pc">Assistenza PC</option>
+<option value="sito-web">Sito Web</option>
+<option value="reti-wifi">Reti & WiFi</option>
+<option value="lezioni">Lezioni Informatica</option>
+<option value="sicurezza">Sicurezza Informatica</option>
+<option value="graphic">Graphic Design</option>
+<option value="altro">Altro</option>
+</select>
+</div>
+<div class="form-group"><label for="messaggio">Messaggio *</label><textarea id="messaggio" name="messaggio" required placeholder="Descrivi la tua richiesta..."></textarea></div>
+<button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Invia Richiesta</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="footer-content">
+<div class="footer-logo">CM Tech</div>
+<div class="footer-piva"><i class="fas fa-id-card"></i> P.IVA 00530260157</div>
+<p style="color:#94a3b8;max-width:500px;margin:0 auto">Tecnico Informatico & Sviluppatore Web. Soluzioni professionali per privati e aziende.</p>
+<div class="footer-social">
+<a href="mailto:maiolinicladio@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+<a href="tel:+393533535025" title="Telefono"><i class="fas fa-phone"></i></a>
+<a href="https://wa.me/393533535025" title="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</div>
+<div class="footer-copy">
+<p>2026 Claudio Maiolini - CM Tech. Tutti i diritti riservati.</p>
+</div>
+</div>
+</footer>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modal1" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>Come Proteggere il Tuo PC dai Virus nel 2026</h2>
+<p><i class="far fa-calendar"></i> 05 Luglio 2026 | <i class="far fa-clock"></i> 5 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal1')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>La sicurezza informatica è diventata una priorità assoluta per chiunque utilizzi un computer. Con l'evoluzione delle minacce digitali, proteggere il proprio PC richiede un approccio multilivello che combini software aggiornati, buone pratiche di navigazione e consapevolezza dei rischi.</p>
+<h3>1. Installa un Antivirus Affidabile</h3>
+<p>Non basta più avere un antivirus base. Nel 2026 è fondamentale scegliere una soluzione che offra protezione in tempo reale, scansione comportamentale e difesa contro il ransomware. Windows Defender è migliorato molto, ma per una protezione completa si consiglia un antivirus premium con firewall integrato.</p>
+<h3>2. Mantieni il Sistema Aggiornato</h3>
+<p>Gli aggiornamenti di sistema non sono solo miglioramenti estetici: correggono vulnerabilità di sicurezza che i criminali informatici sfruttano attivamente. Attiva gli aggiornamenti automatici sia per il sistema operativo che per tutti i programmi installati.</p>
+<h3>3. Fai Backup Regolari</h3>
+<p>Il backup è la tua assicurazione contro ransomware, guasti hardware ed errori umani. Usa una strategia 3-2-1: 3 copie dei dati, su 2 supporti diversi, di cui 1 offsite (cloud).</p>
+<h3>4. Attenzione alle Email Sospette</h3>
+<p>Il phishing resta il metodo di attacco più comune. Non cliccare mai su link o allegati da mittenti sconosciuti, e anche da mittenti conosciuti se il messaggio sembra strano o urgente.</p>
+<h3>5. Usa Password Sicure e Uniche</h3>
+<p>Un gestore di password è indispensabile nel 2026. Genera password complesse e uniche per ogni servizio, attiva l'autenticazione a due fattori ovunque possibile.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal1')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal2" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>Sito Web Aziendale: Cosa Serve nel 2026</h2>
+<p><i class="far fa-calendar"></i> 28 Giugno 2026 | <i class="far fa-clock"></i> 7 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal2')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>Avere un sito web nel 2026 non è più un optional ma una necessità. Ma cosa rende un sito davvero efficace? Ecco gli elementi essenziali che non possono mancare.</p>
+<h3>1. Design Responsive</h3>
+<p>Oltre il 70% del traffico web proviene da dispositivi mobili. Il tuo sito deve essere perfettamente navigabile su smartphone, tablet e desktop senza compromessi.</p>
+<h3>2. Velocità di Caricamento</h3>
+<p>Un sito lento perde visitatori. Google penalizza i siti che impiegano più di 3 secondi a caricarsi. Ottimizza immagini, usa caching e scegli un hosting performante.</p>
+<h3>3. SEO Ottimizzata</h3>
+<p>Essere trovati su Google è fondamentale. Struttura i contenuti con parole chiave pertinenti, meta tag corretti, URL puliti e sitemap XML.</p>
+<h3>4. Sicurezza HTTPS</h3>
+<p>Il certificato SSL è obbligatorio. Protegge i dati dei visitatori ed è un fattore di ranking per Google.</p>
+<h3>5. Call to Action Chiare</h3>
+<p>Ogni pagina deve avere un obiettivo chiaro: contattarti, acquistare, iscriversi. I pulsanti devono essere visibili e il percorso utente intuitivo.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal2')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal3" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>WiFi Lento? Ecco Come Velocizzarlo</h2>
+<p><i class="far fa-calendar"></i> 15 Giugno 2026 | <i class="far fa-clock"></i> 4 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal3')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>Una connessione WiFi lenta può trasformare anche le attività più semplici in una fonte di frustrazione. Ecco i passaggi pratici per ottimizzare la tua rete wireless.</p>
+<h3>1. Posiziona il Router Correttamente</h3>
+<p>Il router va posizionato in una zona centrale della casa, lontano da muri spessi, elettrodomestici e superfici metalliche. Evita armadi e cassetti.</p>
+<h3>2. Scegli il Canale Giusto</h3>
+<p>Usa un'app analizzatore WiFi per trovare il canale meno congestionato nella tua zona. I canali 1, 6 e 11 sono i migliori per il 2.4GHz.</p>
+<h3>3. Aggiorna il Firmware</h3>
+<p>I produttori rilasciano aggiornamenti che migliorano prestazioni e sicurezza. Controlla regolarmente il pannello di amministrazione del router.</p>
+<h3>4. Usa la Banda 5GHz</h3>
+<p>Per dispositivi vicini al router, la banda 5GHz offre velocità maggiori e meno interferenze rispetto al 2.4GHz.</p>
+<h3>5. Considera un Mesh System</h3>
+<p>Per case grandi o con muri spessi, un sistema mesh elimina i punti morti garantendo copertura uniforme in ogni stanza.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal3')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal4" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>SSD vs HDD: Quale Scegliere per il Tuo PC</h2>
+<p><i class="far fa-calendar"></i> 02 Giugno 2026 | <i class="far fa-clock"></i> 6 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal4')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>La scelta tra SSD e HDD è una delle decisioni più importanti quando si parla di upgrade del PC. Vediamo le differenze fondamentali per fare la scelta giusta.</p>
+<h3>Velocità</h3>
+<p>Un SSD SATA è circa 5 volte più veloce di un HDD, mentre un SSD NVMe può essere fino a 30 volte più veloce. Il sistema operativo si avvia in pochi secondi e i programmi si aprono istantaneamente.</p>
+<h3>Durata e Affidabilità</h3>
+<p>Gli SSD non hanno parti meccaniche in movimento, quindi sono più resistenti agli urti e ai movimenti. La vita utile è generalmente superiore a quella degli HDD.</p>
+<h3>Capacità e Prezzo</h3>
+<p>Gli HDD offrono più spazio a minor costo. Per archiviazione massiva (foto, video, giochi) un HDD da 2-4TB è ancora conveniente. Per il sistema operativo e i programmi, un SSD è indispensabile.</p>
+<h3>La Soluzione Ideale</h3>
+<p>La configurazione ottimale nel 2026 è: SSD NVMe da 500GB-1TB per sistema e programmi, HDD da 2-4TB per archiviazione dati.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal4')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal5" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>Backup Automatici: Non Perdere Mai i Tuoi Dati</h2>
+<p><i class="far fa-calendar"></i> 20 Maggio 2026 | <i class="far fa-clock"></i> 5 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal5')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>I dati sono il bene più prezioso del digitale. Foto, documenti, lavori: perdere tutto in un attimo è più facile di quanto si pensi. Ecco come proteggersi.</p>
+<h3>La Regola 3-2-1</h3>
+<p>Mantieni sempre 3 copie dei tuoi dati importanti, su 2 tipi di supporto diversi, di cui almeno 1 fuori sede (cloud).</p>
+<h3>Backup Locale</h3>
+<p>Un disco esterno o un NAS sono ideali per backup rapidi e completi. Windows ha Backup e Ripristino integrato, macOS ha Time Machine.</p>
+<h3>Backup Cloud</h3>
+<p>Servizi come Google Drive, Dropbox, OneDrive o Backblaze offrono backup automatici e accesso da qualsiasi dispositivo. Scegli soluzioni con crittografia end-to-end.</p>
+<h3>Verifica i Backup</h3>
+<p>Un backup non verificato non esiste. Controlla periodicamente che i file siano effettivamente recuperabili e integri.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal5')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal6" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<div class="modal-header">
+<h2>Imparare il Computer da Zero: Guida per Principianti</h2>
+<p><i class="far fa-calendar"></i> 10 Maggio 2026 | <i class="far fa-clock"></i> 4 min di lettura</p>
+<button class="modal-close" onclick="closeModalDirect('modal6')"><i class="fas fa-times"></i></button>
+</div>
+<div class="modal-body">
+<p>Non è mai troppo tardi per imparare a usare il computer. Che tu sia un senior che vuole tenersi aggiornato o un principiante assoluto, questa guida ti aiuterà a muovere i primi passi con sicurezza.</p>
+<h3>1. Conosci il Desktop</h3>
+<p>Il desktop è la tua scrivania digitale. Impara a riconoscere le icone, il menu Start, la barra delle applicazioni e come organizzare file e cartelle.</p>
+<h3>2. Naviga in Internet</h3>
+<p>Il browser è il tuo portale sul mondo. Impara a usare la barra degli indirizzi, i segnalibri, la cronologia e come riconoscere siti sicuri (https e lucchetto).</p>
+<h3>3. Gestisci la Tua Email</h3>
+<p>Crea un indirizzo email professionale, impara a scrivere messaggi chiari, gestire allegati e riconoscere le email di phishing.</p>
+<h3>4. Usa i Programmi di Office</h3>
+<p>Word per documenti, Excel per calcoli, PowerPoint per presentazioni. Sono strumenti essenziali per lavoro e studio.</p>
+<h3>5. Social Media e Comunicazione</h3>
+<p>WhatsApp, Facebook, Skype: impara a comunicare in modo sicuro, gestire la privacy e riconoscere le fake news.</p>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="closeModalDirect('modal6')"><i class="fas fa-check"></i> Ho capito</button>
+</div>
+</div>
+</div>
+
+<script>
+// ===== MATRIX EFFECT =====
+const canvas=document.getElementById('matrix-canvas');
+const ctx=canvas.getContext('2d');
+let w,h;
+const fontSize=14;
+let columns;
+let drops=[];
+const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?/~`';
+function resizeCanvas(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+  columns=Math.floor(w/fontSize);
+  drops=[];
+  for(let i=0;i<columns;i++)drops[i]=Math.random()*-100;
+}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+function drawMatrix(){
+  ctx.fillStyle='rgba(10,10,10,0.05)';
+  ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#00ff41';
+  ctx.font=fontSize+'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const text=chars.charAt(Math.floor(Math.random()*chars.length));
+    ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+    if(drops[i]*fontSize>h&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(drawMatrix,35);
+
+// ===== DATETIME =====
+function updateDateTime(){
+  const now=new Date();
+  const months=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  const days=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  document.getElementById('currentDate').textContent=days[now.getDay()]+' '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  document.getElementById('currentTime').textContent=now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateDateTime,1000);
+updateDateTime();
+
+// ===== NAVBAR SCROLL =====
+window.addEventListener('scroll',()=>{
+  const navbar=document.getElementById('navbar');
+  if(window.scrollY>50)navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+  anchor.addEventListener('click',function(e){
+    e.preventDefault();
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+// ===== FADE IN =====
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible');});
+},{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+
+// ===== QUOTE CALCULATOR =====
+const selectedItems=new Map();
+document.querySelectorAll('.quote-item').forEach(item=>{
+  item.addEventListener('click',function(e){
+    if(e.target.tagName==='INPUT')return;
+    const name=this.dataset.name;
+    const price=parseFloat(this.dataset.price);
+    const type=this.dataset.type;
+    if(this.classList.contains('selected')){
+      this.classList.remove('selected');
+      selectedItems.delete(name);
+      const qtyInput=this.querySelector('.qty-input');
+      if(qtyInput)qtyInput.style.display='none';
+    }else{
+      this.classList.add('selected');
+      const qtyInput=this.querySelector('.qty-input');
+      if(qtyInput){
+        qtyInput.style.display='block';
+        selectedItems.set(name,{price:price,qty:parseInt(qtyInput.value)||1,type:type});
+      }else{
+        selectedItems.set(name,{price:price,qty:1,type:type});
+      }
+    }
+    updateQuoteSummary();
+  });
+});
+document.querySelectorAll('.qty-input').forEach(input=>{
+  input.addEventListener('change',function(){
+    const item=this.closest('.quote-item');
+    const name=item.dataset.name;
+    const price=parseFloat(item.dataset.price);
+    let qty=parseInt(this.value)||1;
+    if(qty<1)qty=1;
+    this.value=qty;
+    if(item.classList.contains('selected')){
+      selectedItems.set(name,{price:price,qty:qty,type:item.dataset.type});
+      updateQuoteSummary();
+    }
+  });
+});
+function updateQuoteSummary(){
+  const listEl=document.getElementById('quoteSelectedList');
+  const totalEl=document.getElementById('quoteTotal');
+  const submitBtn=document.getElementById('quoteSubmitBtn');
+  let total=0;
+  if(selectedItems.size===0){
+    listEl.innerHTML='<div class="quote-empty">Nessun servizio selezionato</div>';
+    totalEl.textContent='€0';
+    submitBtn.disabled=true;
+    return;
+  }
+  let html='';
+  selectedItems.forEach((data,name)=>{
+    const itemTotal=data.price*data.qty;
+    total+=itemTotal;
+    html+='<div class="quote-selected-item"><span class="quote-selected-item-name">'+name+(data.qty>1?' x'+data.qty:'')+'</span><span class="quote-selected-item-price">€'+itemTotal+'</span></div>';
+  });
+  listEl.innerHTML=html;
+  totalEl.textContent='€'+total.toLocaleString('it-IT');
+  submitBtn.disabled=false;
+}
+function submitQuote(){
+  if(selectedItems.size===0)return;
+  let body='Nuovo preventivo dal sito CM Tech%0A%0A';
+  let total=0;
+  selectedItems.forEach((data,name)=>{
+    const itemTotal=data.price*data.qty;
+    total+=itemTotal;
+    body+=name+(data.qty>1?' x'+data.qty:'')+': €'+itemTotal+'%0A';
+  });
+  body+='%0ATOTALE: €'+total.toLocaleString('it-IT');
+  window.location.href='mailto:maiolinicladio@gmail.com?subject=Preventivo CM Tech&body='+body;
+}
+
+// ===== CALENDAR =====
+let currentDate=new Date();
+const monthNames=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+const sampleEvents={
+  '2026-07-15':[{time:'09:00',title:'Intervento a domicilio - Milano'},{time:'14:30',title:'Consulenza web - Remoto'}],
+  '2026-07-18':[{time:'10:00',title:'Assemblaggio PC - Studio'},{time:'16:00',title:'Lezione informatica - Online'}],
+  '2026-07-22':[{time:'09:30',title:'Configurazione rete WiFi'},{time:'11:00',title:'Riparazione PC - Urgente'}],
+  '2026-07-25':[{time:'14:00',title:'Sviluppo sito web - Cliente A'}],
+  '2026-07-28':[{time:'09:00',title:'Manutenzione server'},{time:'15:00',title:'Lezione Photoshop - Online'}]
+};
+function renderCalendar(){
+  const year=currentDate.getFullYear();
+  const month=currentDate.getMonth();
+  document.getElementById('calendarMonthYear').textContent=monthNames[month]+' '+year;
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const daysInPrevMonth=new Date(year,month,0).getDate();
+  const daysEl=document.getElementById('calendarDays');
+  daysEl.innerHTML='';
+  const today=new Date();
+  for(let i=firstDay-1;i>=0;i--){
+    const day=document.createElement('div');
+    day.className='calendar-day other-month';
+    day.textContent=daysInPrevMonth-i;
+    daysEl.appendChild(day);
+  }
+  for(let i=1;i<=daysInMonth;i++){
+    const day=document.createElement('div');
+    day.className='calendar-day';
+    day.textContent=i;
+    const dateKey=year+'-'+(month+1).toString().padStart(2,'0')+'-'+i.toString().padStart(2,'0');
+    if(year===today.getFullYear()&&month===today.getMonth()&&i===today.getDate()){
+      day.classList.add('today');
+    }
+    if(sampleEvents[dateKey]){
+      day.classList.add('has-event');
+    }
+    day.addEventListener('click',function(){
+      document.querySelectorAll('.calendar-day').forEach(d=>d.classList.remove('selected'));
+      this.classList.add('selected');
+      showEvents(dateKey);
+    });
+    daysEl.appendChild(day);
+  }
+  const remaining=(7-((firstDay+daysInMonth)%7))%7;
+  for(let i=1;i<=remaining;i++){
+    const day=document.createElement('div');
+    day.className='calendar-day other-month';
+    day.textContent=i;
+    daysEl.appendChild(day);
+  }
+}
+function showEvents(dateKey){
+  const eventsEl=document.getElementById('calendarEvents');
+  const events=sampleEvents[dateKey];
+  if(!events||events.length===0){
+    eventsEl.innerHTML='<div class="calendar-event"><div class="calendar-event-time">--:--</div><div class="calendar-event-title">Nessun evento programmato - Disponibile</div></div>';
+    return;
+  }
+  eventsEl.innerHTML=events.map(e=>'<div class="calendar-event"><div class="calendar-event-time">'+e.time+'</div><div class="calendar-event-title">'+e.title+'</div></div>').join('');
+}
+function changeMonth(delta){
+  currentDate.setMonth(currentDate.getMonth()+delta);
+  renderCalendar();
+}
+renderCalendar();
+
+// ===== MODALS =====
+function openModal(id){
+  document.getElementById(id).classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e.target.classList.contains('modal-overlay')){
+    e.target.classList.remove('active');
+    document.body.style.overflow='';
+  }
+}
+function closeModalDirect(id){
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay.active').forEach(m=>{
+      m.classList.remove('active');
+      document.body.style.overflow='';
+    });
+  }
+});
+
+// ===== MOBILE MENU =====
+function toggleMenu(){
+  const navLinks=document.querySelector('.nav-links');
+  if(navLinks.style.display==='flex'){
+    navLinks.style.display='none';
+  }else{
+    navLinks.style.display='flex';
+    navLinks.style.position='absolute';
+    navLinks.style.top='100%';
+    navLinks.style.left='0';
+    navLinks.style.right='0';
+    navLinks.style.background='rgba(15,23,42,0.98)';
+    navLinks.style.flexDirection='column';
+    navLinks.style.padding='1rem';
+    navLinks.style.gap='1rem';
+  }
+}
+
+// ===== FORM SUBMIT =====
+document.getElementById('contactForm').addEventListener('submit',function(){
+  document.getElementById('submitBtn').innerHTML='<i class="fas fa-spinner fa-spin"></i> Invio in corso...';
+});
+</script>
+</body>
+</html>
