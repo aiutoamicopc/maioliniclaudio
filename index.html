@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -279,6 +279,46 @@ section{padding:3rem 1.5rem}
 ::-webkit-scrollbar{width:8px}
 ::-webkit-scrollbar-track{background:var(--light)}
 ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+</style>
+<style id="radio-mobile-fix">
+@media(max-width:768px){
+  #radio-player{
+    width:calc(100vw - 16px)!important;
+    max-width:calc(100vw - 16px)!important;
+    left:8px!important;
+    right:8px!important;
+    bottom:8px!important;
+    padding:12px!important;
+    box-sizing:border-box!important;
+    border-radius:12px!important;
+  }
+  #radio-player audio{
+    height:36px!important;
+    width:100%!important;
+  }
+  #radio-player #track-info{
+    font-size:11px!important;
+    height:16px!important;
+  }
+  #radio-player button{
+    font-size:11px!important;
+    padding:8px 4px!important;
+    min-height:32px!important;
+    touch-action:manipulation!important;
+  }
+  #radio-player span{
+    font-size:13px!important;
+  }
+  body{ padding-bottom:180px!important; }
+}
+@media(max-width:400px){
+  #radio-player{
+    padding:10px!important;
+  }
+  #radio-player button{
+    font-size:10px!important;
+  }
+}
 </style>
 </head>
 <body>
