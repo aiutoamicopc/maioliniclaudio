@@ -1102,7 +1102,7 @@ renderCalendar();
   </div>
   <div id="track-info" style="color:#06b6d4;font-size:12px;text-align:center;height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;">In attesa di Play...</div>
   <audio id="audio-player" controls style="width:100%;height:40px;border-radius:8px;outline:none;">
-    <source src="https://stream.radioparadise.com/mp3-128" type="audio/mpeg">
+    
   </audio>
   <div style="display:flex;gap:5px;">
     <button id="btn-paradise" onclick="setStation('paradise')" style="flex:1;background:#00ff41;color:black;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold;">Paradise</button>
@@ -1157,7 +1157,7 @@ function setStation(name) {
     currentStation = name;
     let s = stations[name];
     let audio = document.getElementById('audio-player');
-    audio.src = s.url;
+    audio.src = s.url; audio.load();
     audio.play().catch(e => console.log('Autoplay bloccato'));
 
     ['paradise', 'somafm', 'fip'].forEach(id => {
