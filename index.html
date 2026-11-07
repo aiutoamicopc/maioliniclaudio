@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <!-- Google tag (gtag.js) -->
@@ -1069,26 +1069,85 @@ if(contactForm){
 renderCalendar();
 </script>
 <!-- RADIO PLAYER -->
-<div id="radio-player" style="position:fixed;bottom:20px;right:20px;background:rgba(15,23,42,0.95);backdrop-filter:blur(10px);border:1px solid #06b6d4;border-radius:15px;padding:15px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:10px;width:300px;font-family:'Inter',sans-serif;">
+
+<!-- RADIO PLAYER V2 -->
+<div id="radio-player" style="position:fixed;bottom:20px;right:20px;background:rgba(15,23,42,0.95);backdrop-filter:blur(10px);border:1px solid #06b6d4;border-radius:15px;padding:15px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.5);display:flex;flex-direction:column;gap:10px;width:320px;font-family:'Inter',sans-serif;">
   <div style="display:flex;justify-content:space-between;align-items:center;">
     <span style="color:white;font-size:14px;font-weight:600;"><i class="fas fa-radio" style="color:#00ff41;"></i> CM Radio</span>
     <button onclick="document.getElementById('radio-player').style.display='none'" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:18px;">&times;</button>
   </div>
+  <div id="track-info" style="color:#06b6d4;font-size:12px;text-align:center;height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;">In attesa di Play...</div>
   <audio id="audio-player" controls style="width:100%;height:40px;border-radius:8px;outline:none;">
     <source src="https://stream.radioparadise.com/mp3-128" type="audio/mpeg">
   </audio>
   <div style="display:flex;gap:5px;">
-    <button onclick="changeRadio('https://stream.radioparadise.com/mp3-128')" style="flex:1;background:#1d4ed8;color:white;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;">Paradise</button>
-    <button onclick="changeRadio('https://ice1.somafm.com/groovesalad-128-mp3')" style="flex:1;background:#1d4ed8;color:white;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;">SomaFM</button>
-    <button onclick="changeRadio('https://icecast.radiofrance.fr/fip-midfi.mp3')" style="flex:1;background:#1d4ed8;color:white;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;">FIP</button>
+    <button id="btn-paradise" onclick="setStation('paradise')" style="flex:1;background:#00ff41;color:black;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:bold;">Paradise</button>
+    <button id="btn-somafm" onclick="setStation('somafm')" style="flex:1;background:#1d4ed8;color:white;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;">SomaFM</button>
+    <button id="btn-fip" onclick="setStation('fip')" style="flex:1;background:#1d4ed8;color:white;border:none;padding:5px;border-radius:5px;cursor:pointer;font-size:12px;">FIP</button>
   </div>
 </div>
 <script>
-function changeRadio(url) {
-    var audio = document.getElementById('audio-player');
-    audio.src = url;
-    audio.load();
-    audio.play().catch(function(error) { console.log("Premi Play per ascoltare."); });
+let currentStation = 'paradise';
+let metaInterval;
+
+const stations = {
+    paradise: { 
+        url: 'https://stream.radioparadise.com/mp3-128', 
+        api: 'https://api.radioparadise.com/api/now_playing?chan=0', 
+        parse: (d) => ${d.artist} -  
+    },
+    somafm: { 
+        url: 'https://ice1.somafm.com/groovesalad-128-mp3', 
+        api: 'https://somafm.com/songs/groovesalad.json', 
+        parse: (d) => ${d.songs[0].artist} -  
+    },
+    fip: { 
+        url: 'https://icecast.radiofrance.fr/fip-midfi.mp3', 
+        api: 'https://api.radiofrance.fr/livemeta/pull/7', 
+        parse: (d) => {
+            try {
+                let items = d.steps[0].levels[0].items;
+                let artist = items.find(i => i.id === 'artist')?.title || '';
+                let title = items.find(i => i.id === 'title')?.title || '';
+                return artist ? ${artist} -  : title || 'FIP Radio';
+            } catch(e) { return 'FIP Radio'; }
+        }
+    }
+};
+
+function updateMeta() {
+    let s = stations[currentStation];
+    if(!s || !s.api) return;
+    document.getElementById('track-info').innerText = 'Aggiornamento...';
+    fetch(s.api)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('track-info').innerText = s.parse(data);
+        })
+        .catch(() => {
+            document.getElementById('track-info').innerText = "Info non disponibili";
+        });
+}
+
+function setStation(name) {
+    currentStation = name;
+    let s = stations[name];
+    let audio = document.getElementById('audio-player');
+    audio.src = s.url;
+    audio.play().catch(e => console.log('Autoplay bloccato'));
+
+    ['paradise', 'somafm', 'fip'].forEach(id => {
+        let btn = document.getElementById('btn-' + id);
+        if(btn) {
+            btn.style.background = (id === name) ? '#00ff41' : '#1d4ed8';
+            btn.style.color = (id === name) ? 'black' : 'white';
+            btn.style.fontWeight = (id === name) ? 'bold' : 'normal';
+        }
+    });
+
+    if(metaInterval) clearInterval(metaInterval);
+    updateMeta();
+    metaInterval = setInterval(updateMeta, 15000);
 }
 </script>
 </body>
